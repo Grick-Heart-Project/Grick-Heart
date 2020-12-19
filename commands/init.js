@@ -103,8 +103,6 @@ module.exports ={
                       }
                     }
                   );
-            } else {
-                message.channel.send(noPerms)
             }
         } if (args[0] === 'list') {
             connection.execute(
