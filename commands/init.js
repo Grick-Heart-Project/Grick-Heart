@@ -111,9 +111,6 @@ module.exports ={
                     if (err) {
                         logger.error("MySQL " + err)
                     }
-                    if (result = "[]") {
-                        let result = "Initiatve not yet rolled"
-                    }
                     let result1 = JSON.stringify(result)
                     message.channel.send(result1)
                 }
