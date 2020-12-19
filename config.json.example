@@ -1,0 +1,11 @@
+{
+    "token": " --YOUR TOKEN-- ",
+    "prefix": " --YOUR PREFIX-- ",
+    "owner-id": " --YOUR ID-- ",
+    "databaseinfo": {
+        "host":  " --DATABASE IP-- ",
+        "user": " --USER-- ",
+        "password": " --PASSWORD-- ",
+        "database": " --DATABASE NAME--"
+      }
+  }

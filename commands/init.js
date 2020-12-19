@@ -1,36 +1,43 @@
 const Discord = require('discord.js')
+const config = require("../config.json")
+const mysql = require('mysql2')
+const client = new Discord.Client();
+const Logger = require('../modules/logger');
+const logger = new Logger('main');
 module.exports ={
     name: "init",
     description: "this command handles game initative",
     args:  true,
     aliases: ['initiative'],
     execute(message, args){
+        const connection = mysql.createConnection(config.databaseinfo);
         let noPerms = "You don't have permission to do that!"
         if (!args.length) {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         }
         if (args[0] === 'start') {
             if(message.member.roles.cache.find(r => r.name === "DM")) {
-                let initiativeOrder = "null"
                 message.channel.send("Initiative started")
                 message.channel.send('@everyone, please roll for initative')
-                let initiativeRunning = "true"
             } else {
                 message.channel.send(noPerms)
             }
         }
         if (args[0] === 'stop') {
             if(message.member.roles.cache.find(r => r.name === "DM")) {
-                let initiativeOrder = "null"
+                connection.execute(
+                    `TRUNCATE TABLE ${message.guild.name};`
+                );
                 message.channel.send("Initiative stopped")
-                let initiativeRunning = "false"
             } else {
                 message.channel.send(noPerms)
             }
         }
         if (args[0] === 'reset') {
             if(message.member.roles.cache.find(r => r.name === "DM")) {
-                let initiativeOrder = "null"
+                connection.execute(
+                    `TRUNCATE TABLE ${message.guild.name};`
+                );
                 message.channel.send('@everyone, please roll for initiative')
             } else {
                 message.channel.send(noPerms)
@@ -65,23 +72,52 @@ module.exports ={
         }
         if (args[0] === 'roll') {
             if (message.member.roles.cache.find(r => r.name === "Game Access")) {
-                if (!args[1].length) {
+                let modifiers = args[1]
+                if (args[1] == null) {
                     let modifiers = 0
-                } if (args[1].length) {
-                    let modifiers = args[1]
                 }
                 let initiativeNumber = Math.floor(Math.random() * Math.floor(19)+ 1 + modifiers)
                 message.reply("Your initiative number is: " + initiativeNumber)
+                connection.execute(
+                    'INSERT INTO `' + message.guild.name + "` (`username`, `init number`) VALUES ('" + message.author.username + "', '" + initiativeNumber + "')",
+                    function(err) {
+                      if (err) {
+                          logger.error("MySQL " + err)
+                      }
+                    }
+                  );
             } if(message.member.roles.cache.find(r => r.name === "DM")) {
-                if (!args[1]) { let modifiers = 0}
-                else {
-                    let modifiers = args[1]
+                let modifiers = args[1]
+                if (args[1] == null) {
+                    let modifiers = 0
                 }
                 let initiativeNumber = Math.floor(Math.random() * Math.floor(19)+ 1 + modifiers)
                 message.reply("Your initiative number is: " + initiativeNumber)
+                connection.execute(
+                    'INSERT INTO `' + message.guild.name + "` (`username`, `init number`) VALUES ('" + message.author.username + "', '" + initiativeNumber + "')",
+                    function(err) {
+                      if (err) {
+                          logger.error("MySQL " + err)
+                      }
+                    }
+                  );
             } else {
                 message.channel.send(noPerms)
             }
+        } if (args[0] === 'list') {
+            connection.execute(
+                'SELECT * FROM `' + message.guild.name + '` WHERE 1',
+                function(err, result) {
+                    if (err) {
+                        logger.error("MySQL " + err)
+                    }
+                    if (result = "[]") {
+                        let result = "Initiatve not yet rolled"
+                    }
+                    let result1 = JSON.stringify(result)
+                    message.channel.send(result1)
+                }
+                );
         }
     }
 }
