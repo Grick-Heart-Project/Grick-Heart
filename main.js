@@ -36,26 +36,26 @@ request(url, options, (error, res, body) => {
 })
 
 fs.readdir("./events/", (err, files) => {
+  client.logger.info(`Attempting to load events`);
   if (err) return client.logger.error(err);
   files.forEach(file => {
-    client.logger.info(`Attempting to load event ${file}`);
     const event = require(`./events/${file}`);
     let eventName = file.split(".")[0];
     client.on(eventName, event.bind(null, client));
-    client.logger.info(`Successfully loaded event ${file}`);
   });
+  client.logger.info(`Successfully loaded events!`);
 });
 
 fs.readdir("./commands/", (err, files) => {
+  client.logger.info(`Attempting to load commands`);
   if (err) return client.logger.error(err);
   files.forEach(file => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/${file}`);
     let commandName = file.split(".")[0];
-    client.logger.info(`Attempting to load command ${commandName}`);
     client.commands.set(commandName, props);
-    client.logger.info(`Successfully loaded command ${commandName}`);
   });
+  client.logger.info(`Successfully loaded commands!`);
 });
 
 client.login(config.token);

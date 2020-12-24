@@ -81,7 +81,7 @@ module.exports ={
                 let initiativeNumber = Math.floor(Math.random() * Math.floor(19)+ 1 + modifiers)
                 message.reply("Your initiative number is: " + initiativeNumber)
                 connection.execute(
-                    'INSERT INTO `' + message.guild.name + "` (`username`, `init number`) VALUES ('" + message.author.username + "', '" + initiativeNumber + "')",
+                    'INSERT INTO `' + message.guild.name + "` (`username`, `init number`) VALUES ('" + message.author.tag + "', '" + initiativeNumber + "')",
                     function(err) {
                       if (err) {
                           logger.error("MySQL " + err)
@@ -96,7 +96,7 @@ module.exports ={
                 let initiativeNumber = Math.floor(Math.random() * Math.floor(19)+ 1 + modifiers)
                 message.reply("Your initiative number is: " + initiativeNumber)
                 connection.execute(
-                    'INSERT INTO `' + message.guild.name + "` (`username`, `init number`) VALUES ('" + message.author.username + "', '" + initiativeNumber + "')",
+                    'INSERT INTO `' + message.guild.name + "` (`username`, `init number`) VALUES ('" + message.author.tag + "', '" + initiativeNumber + "')",
                     function(err) {
                       if (err) {
                           logger.error("MySQL " + err)
@@ -112,7 +112,9 @@ module.exports ={
                         logger.error("MySQL " + err)
                     }
                     let result1 = JSON.stringify(result)
-                    message.channel.send(result1)
+                    const jsResults = result
+                    message.channel.send(jsResults[1].username)
+                    logger.info(jsResults[1].username)
                 }
                 );
         }
