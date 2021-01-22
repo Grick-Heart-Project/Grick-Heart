@@ -2,3 +2,5 @@ config.json
 node_modules/
 logs/*
 .vscode/
+testing/
+bans.json

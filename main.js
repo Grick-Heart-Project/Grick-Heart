@@ -11,7 +11,7 @@ client.logger = new Logger('main');
 client.commands = new Enmap();
 client.aliases = new Enmap();
 
-const url = "https://raw.githubusercontent.com/hydrostaticcog/Grick-Heart/master/package.json";
+const url = "https://raw.githubusercontent.com/Grick-Heart-Project/Grick-Heart/master/package.json";
 let options = {json: true};
 let GHversion = require('./package.json')
 
