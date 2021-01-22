@@ -3,13 +3,19 @@ logger = new Logger('main');
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const config = require('../config.json')
+const softBanlist = require('../bans.json')
 
 module.exports = (client, message) => {
     // Ignore all bots
     if (message.author.bot) return;
-  
+
     // Ignore messages not starting with the prefix (in config.json)
     if (message.content.indexOf(client.config.prefix) !== 0) return;
+
+    if (message.author.id === softBanlist[message.author.id]) {
+      message.channel.send('You are unable to use this bot due to trying to claim this bot as your creation. :heart: -hydrostaticcog')
+      return;
+    }
   
     // Our standard argument/command name definition.
     const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
