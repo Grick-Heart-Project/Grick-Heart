@@ -1,1 +1,4 @@
 
+[submodule "dnd5e-data"]
+	path = dnd-data
+	url = https://github.com/Grick-Heart-Project/dnd-data.git
