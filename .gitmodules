@@ -1,4 +1,1 @@
 
-[submodule "dnd-data"]
-	path = dnd-data
-	url = https://github.com/hydrostaticcog/dnd-data.git
