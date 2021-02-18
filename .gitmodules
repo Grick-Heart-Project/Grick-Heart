@@ -1,4 +1,3 @@
-
-[submodule "dnd5e-data"]
-	path = dnd-data
-	url = https://github.com/Grick-Heart-Project/dnd-data.git
+[submodule "Grick-Heart-Data"]
+	path = Grick-Heart-Data
+	url = https://github.com/Grick-Heart-Project/Grick-Heart-Data.git
