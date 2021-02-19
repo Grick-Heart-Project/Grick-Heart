@@ -19,9 +19,5 @@ class Info(Cog):
         verEmbed.add_field(name='Have Issues?', value='Let us know at our GitHub page!\n https://github.com/Grick-Heart-Project/Grick-Heart', inline='false')
         verEmbed.add_field(name='System Info', value=f'Running Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro} on {sys.platform}', inline='true')
         await ctx.send(embed=verEmbed)
-    @commands.command()
-    async def help(self, ctx: MyContext, helpitem):
-        
-
 
 setup = Info.setup
