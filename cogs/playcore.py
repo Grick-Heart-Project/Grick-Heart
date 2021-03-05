@@ -4,6 +4,7 @@ import random
 import json
 
 from discord.ext import commands
+from discord.utils import get
 
 from utils.cog_class import Cog
 from utils.ctx_class import MyContext
@@ -28,7 +29,7 @@ def spellembed(name, source, level, school, time, range, components, duration, c
 
 class PlayCore(Cog):
     @commands.command()
-    async def roll(self, ctx, dice):
+    async def roll(self, ctx: MyContext, dice):
         value = random.randint(1, int(dice))
         await ctx.reply(f"You rolled a {value}!")
     
@@ -38,6 +39,22 @@ class PlayCore(Cog):
         embed = spellembed(sD['name'], sD['source'], sD['level'], sD['school'], sD['time'], sD['range'], sD['components'], sD['duration'], sD['classes'])
         await ctx.send(embed=embed)
         await ctx.send(f"Spell Text {sD['text']}")
+
+    @commands.has_role('DM')
+    @commands.command()
+    async def game(self, ctx: MyContext, option, user: discord.User):
+        if (option == 'add'):
+            role = get(ctx.guild.roles, name='Game Access')
+            gameChannel = get(ctx.guild.channels, name='table')
+            await gameChannel.send(f'{user} has been added to the game!')
+            await discord.Member.add_roles(user, role)
+            await ctx.send(f'{user} has been added to the game!')
+        if (option == 'remove'):
+            role = get(ctx.guild.roles, name='Game Access')
+            gameChannel = get(ctx.guild.channels, name='table')
+            await gameChannel.send(f'{user} has been removed from the game!')
+            await discord.Member.remove_roles(user, role)
+            await ctx.send(f'{user} has been removed from the game!')
 
 
 setup = PlayCore.setup
