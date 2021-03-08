@@ -1,0 +1,34 @@
+[bot]
+prefixes = ["?"]
+description = """D&D Bot for Discord"""
+playing = "WOTC Scams (Secret Lair)"
+commands_are_case_insensitive = true
+
+[database]
+# A postgreSQL database to store information about users, channels, and guilds
+# Please ensure the database exist before loading the database modules
+# Quick Start : https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e
+enable = true
+host = " --ip-- "
+port = "5432"
+user = " --user-- "
+password = " --password-- "
+database = " --db-- "
+
+[auth.discord]
+# Your bot token. You can find it on the Bot page of the Developper portal
+token = " --token-- "
+
+[cogs]
+# Names of cogs to load. Usually cogs.file_name_without_py
+cogs_to_load = ['jishaku', 'cogs.error_handling', 'cogs.simple_commands', 'cogs.background_loop', 'cogs.support_server_commands', 'cogs.database_commands', 'cogs.basic_info', 'cogs.playcore']
+
+# The name after cogs is the name of the class
+[cogs.SimpleCommands]
+hello_message = "Hello there!"
+
+[cogs.SupportServerCommands]
+# That's the ID of your server where the command will be ran
+support_server_id = 782282959734308914
+# ID of an empty channel that will be used as a status dashboard.
+status_channel_id = 816826847286526023

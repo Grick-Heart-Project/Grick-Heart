@@ -1,6 +1,5 @@
-config.json
-node_modules/
-logs/*
 .vscode/
-testing/
-bans.json
+logs/*
+config.toml
+cogs/__pycache__/
+utils/__pycache__/
