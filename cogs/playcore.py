@@ -32,7 +32,7 @@ class PlayCore(Cog):
     @commands.command()
     async def roll(self, ctx: MyContext, dice):
         value = random.randint(1, int(dice))
-        await ctx.reply(f"You rolled a {value}!")
+        await ctx.send(f"{ctx.author.mention}, you rolled a {value}!")
     
     @commands.command()
     async def spell(self, ctx: MyContext, spellname):
