@@ -40,7 +40,7 @@ class SupportServerCommands(Cog):
         self.bot.logger.debug("Updating status message", guild=status_channel.guild, channel=status_channel)
 
         await purge_channel_messages(status_channel)
-        embed = discord.Embed(colour=discord.Colour.blurple(),
+        embed = discord.Embed(colour=0x239B56,
                               title=f"{self.bot.user.name}'s status")
 
         embed.add_field(name="Guilds Count", value=f"{len(self.bot.guilds)}", inline=True)
