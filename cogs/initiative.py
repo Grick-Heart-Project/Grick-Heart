@@ -28,7 +28,7 @@ class Initiative(Cog):
     @initiative.command()
     async def whatsmy(self, ctx: MyContext):
         db_user = await get_from_db(ctx.author)
-        await ctx.reply(f'Your initiative number is {db_user.initNum}')
+        await ctx.send(f'{ctx.author.mention}, your initiative number is {db_user.initNum}')
     
     @initiative.command()
     async def list(self, ctx: MyContext):
