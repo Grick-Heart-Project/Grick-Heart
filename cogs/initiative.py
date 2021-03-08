@@ -20,7 +20,7 @@ class Initiative(Cog):
     async def roll(self, ctx: MyContext, modifiers = 0):
         rawValue = random.randint(1, int(20))
         value = rawValue + modifiers
-        await ctx.reply(f"You rolled a {value} for initiative!")
+        await ctx.send(f"{ctx.author.mention}, you rolled a {value} for initiative!")
         db_user = await get_from_db(ctx.author)
         db_user.initNum = value 
         await db_user.save()
