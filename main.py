@@ -22,7 +22,7 @@ intents.messages     = True
 intents.reactions    = True
 
 intents.presences    = False  # Priviledged
-intents.members      = False  # Priviledged
+intents.members      = True  # Priviledged
 intents.bans         = False
 intents.emojis       = False
 intents.integrations = False

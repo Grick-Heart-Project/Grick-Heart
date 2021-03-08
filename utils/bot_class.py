@@ -12,8 +12,6 @@ from utils import config as config
 from utils.ctx_class import MyContext
 from utils.logger import FakeLogger
 from utils.models import get_from_db
-
-
 class MyBot(AutoShardedBot):
     def __init__(self, *args, **kwargs):
         self.logger = FakeLogger()
@@ -51,6 +49,9 @@ class MyBot(AutoShardedBot):
             return  # ignore messages from other bots
 
         ctx = await self.get_context(message, cls=MyContext)
+        if self.user.mentioned_in(message) and ctx.prefix is None and str(self.user.id) in message.content:
+            _ = await ctx.get_translate_function()
+            await ctx.send(_("Hello! I'm Grick Heart, your Dungeons & Dragons tool in Discord! My default prefix is `!`. To change my prefix, do `!settings prefix <your preferred prefix>`. For help, type `!help`"))
         if ctx.prefix is not None:
             await self.invoke(ctx)
 
@@ -95,3 +96,4 @@ async def get_prefix(bot: MyBot, message: discord.Message):
                 forced_prefixes.append(guild_prefix)
 
         return commands.when_mentioned_or(*forced_prefixes)(bot, message)
+

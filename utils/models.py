@@ -61,6 +61,7 @@ class DiscordUser(Model):
     discriminator = fields.CharField(4)
     last_modified = fields.DatetimeField(auto_now=True)
     times_ran_example_command = fields.IntField(default=0)
+    initNum = fields.IntField(default=0)
 
     language = fields.CharField(6, default="en")
     access_level_override = fields.IntEnumField(enum_type=AccessLevel, default=AccessLevel.DEFAULT)
@@ -79,6 +80,7 @@ class DiscordMember(Model):
     id = fields.IntField(pk=True)
     guild: DiscordGuild = fields.ForeignKeyField('models.DiscordGuild')
     user: DiscordUser = fields.ForeignKeyField('models.DiscordUser')
+    initNum = fields.IntField(default=0)
 
     access_level = fields.IntEnumField(enum_type=AccessLevel, default=AccessLevel.DEFAULT)
 

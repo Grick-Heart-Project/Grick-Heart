@@ -13,7 +13,7 @@ with open('release.json') as f:
 class Info(Cog):
     @commands.command()
     async def version(self, ctx: MyContext):
-        verEmbed = discord.Embed(title="Grick Heart Version Info", description='', color=0x00e5e5)
+        verEmbed = discord.Embed(title="Grick Heart Version Info", description='', color=0x239B56)
         verEmbed.add_field(name='Version', value=releaseData['ghVersion'], inline='true')
         verEmbed.add_field(name='Release Date', value=releaseData['releaseDate'], inline='true')
         verEmbed.add_field(name='Have Issues?', value='Let us know at our GitHub page!\n https://github.com/Grick-Heart-Project/Grick-Heart', inline='false')
