@@ -16,7 +16,7 @@ def spelljson(spellname):
         return data[spellname]
 
 def spellembed(name, source, level, school, time, range, components, duration, classes):
-    embed = discord.Embed(name=f'Spell Data for {name}', color=0x239B56)
+    embed = discord.Embed(title=f'Spell Data for {name}', color=0x239B56)
     embed.add_field(name='Source', value=source, inline='true')
     embed.add_field(name='Level', value=level, inline='true')
     embed.add_field(name='School', value=school, inline='true')
@@ -45,7 +45,7 @@ class PlayCore(Cog):
         await ctx.send(embed=embed)
         await ctx.send(f"Spell Text {sD['text']}")
 
-    @commands.has_role('DM' or 'DM Helper')
+    @commands.has_any_role('DM', 'DM Helper')
     @commands.command()
     async def game(self, ctx: MyContext, option, member: discord.Member):
         if (option == 'add'):
