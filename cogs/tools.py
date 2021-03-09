@@ -33,8 +33,12 @@ class Tools(Cog):
         creditsEmbed.add_field(name='Bot Framework Developer', value=eyes_mention)
         creditsEmbed.add_field(name='Bot Requestor', value=walker_mention)
         creditsEmbed.add_field(name='API', value='https://open5e.com')
+        creditsEmbed.add_field(name='Copyright', value='Dungeons and Dragons is a trademark of Wizards of the Coast. I do not own this.', inline=False)
         creditsEmbed.set_footer(text=f'Current Bot Version: v{release}')
         await ctx.send(embed=creditsEmbed)
+
+    #@commands.command()
+    #async def convert(self, ctx: MyContext, currency1, currency2, amount):
 
 
 setup = Tools.setup
