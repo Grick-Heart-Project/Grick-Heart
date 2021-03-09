@@ -30,8 +30,9 @@ def spellembed(name, source, level, school, time, range, components, duration, c
 
 class PlayCore(Cog):
     @commands.command()
-    async def roll(self, ctx: MyContext, dice):
-        value = random.randint(1, int(dice))
+    async def roll(self, ctx: MyContext, dice, modifiers = 0):
+        diceNum = ''.join(dice.split('d', 1))
+        value = random.randint(1, int(diceNum)) + modifiers
         await ctx.send(f"{ctx.author.mention}, you rolled a {value}!")
     
     @commands.command()
