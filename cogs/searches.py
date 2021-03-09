@@ -91,7 +91,9 @@ class Searches(Cog):
                 sD = spellAPI(spellName1)
                 embed = spellembed(sD['name'], sD['page'], sD['level'], sD['school'], sD['casting_time'], sD['range'], sD['components'], sD['duration'], sD['dnd_class'])
                 await ctx.send(embed=embed)
-                spellText = sD['desc'] +" At Higher Levels: "+ sD['higher_level']
+                if (sD['higher_level'] == ""):
+                    higher_level = 'No Bonuses'
+                spellText = sD['desc'] +" At Higher Levels: "+ higher_level
                 await ctx.send(f"Spell Text: {spellText}")
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find spell {spellname}')
