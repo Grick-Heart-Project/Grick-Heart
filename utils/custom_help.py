@@ -31,4 +31,5 @@ class EmbedHelpCommand(commands.HelpCommand):
         embed.add_field(name='Weapon Command', value='You can look up any weapon in the D&D universe with `!weapon <weapon name>`.', inline=False)
         embed.add_field(name='Game Command', value='This command allows DMs to control who is in the game. You can add players with `!game add <player>` and remove them with `!game remove <player>`. Be sure that you have set up your roles and channels correctly!', inline=False)
         embed.add_field(name='Initiative Command', value="By far the most handy command in the bot, you can roll for initiative with `!init roll <modifiers>` and then see your initiative number with `!init whatsmy`. You can also see all member's number with `!init list`. DMs can reset the initiative with `!init reset`.", inline=False)
+        embed.add_field(name='Experience Command', value="This command stores experience scores in out database. You can see how much experience you have with `!xp whatsmy`, and your friends with `!xp list`. DM's can control xp with `!xp <add, remove, reset> <amount>`.")
         await self.get_destination().send(embed=embed)

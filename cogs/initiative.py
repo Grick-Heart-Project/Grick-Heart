@@ -14,7 +14,7 @@ class Initiative(Cog):
     @commands.group(aliases=['init'])
     async def initiative(self, ctx: MyContext):
         if not ctx.invoked_subcommand:
-            await ctx.send("Grick Heart's Initiative command!")
+            await ctx.send("Grick Heart's Initiative command!\nSyntax: `!init <option>`")
 
     @initiative.command()
     async def roll(self, ctx: MyContext, modifiers = 0):

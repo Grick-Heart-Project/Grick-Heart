@@ -1,3 +1,4 @@
+from operator import add
 import time
 import discord
 import random
@@ -9,6 +10,7 @@ from discord.utils import get
 
 from utils.cog_class import Cog
 from utils.ctx_class import MyContext
+from utils.models import get_from_db
 
 def spelljson(spellname):
     with open('Grick-Heart-Data/spells/spells.json') as f:
@@ -50,6 +52,66 @@ class PlayCore(Cog):
             await gameChannel.send(f'{member} has been removed from the game!')
             await member.remove_roles(role)
             await ctx.send(f'{member} has been removed from the game!')
+
+    @commands.group(aliases=['xp'])
+    async def experience(self, ctx: MyContext):
+        if not ctx.invoked_subcommand:
+            await ctx.send("Grick Heart's Experience command!\nSyntax: `!xp <option>`")
+
+    @commands.has_role('DM')
+    @experience.command(aliases=['give'])
+    async def add(self, ctx: MyContext, player: discord.Member, addAmount):
+        addXP = int(addAmount)
+        db_user = await get_from_db(player)
+        oldXPNum = db_user.xpNum
+        db_user.xpNum = oldXPNum + addXP
+        await db_user.save()
+        await ctx.send(f"Added {addAmount}xp to {player.mention}'s expereince score. {player.mention} now has {db_user.xpNum} experience")
+
+    @commands.has_role('DM')
+    @experience.command(aliases=['revoke', 'take'])
+    async def remove(self, ctx: MyContext, player: discord.Member, removeAmount):
+        subtractXP = int(removeAmount)
+        db_user = await get_from_db(player)
+        oldXPNum = db_user.xpNum
+        db_user.xpNum = oldXPNum - subtractXP
+        await db_user.save()
+        await ctx.send(f"Subtracted {removeAmount}xp from {player.mention}'s expereince score. {player.mention} now has {db_user.xpNum} experience")
+
+    @commands.has_role('DM')
+    @experience.command()
+    async def reset(self, ctx: MyContext, player: discord.Member):
+        db_user = await get_from_db(player)
+        db_user.xpNum = 0
+        await db_user.save()
+        await ctx.send(f"Reset {player.mention}'s experience score.")
+
+    @commands.has_role('Game Access')
+    @experience.command()
+    async def whatsmy(self, ctx: MyContext):
+        db_user = await get_from_db(ctx.author)
+        await ctx.send(f"{ctx.author.mention}, your experience score is {db_user.xpNum}.")
+
+    @commands.has_any_role('Game Access', 'DM', 'DM Helper')
+    @experience.command()
+    async def list(self, ctx: MyContext):
+        await ctx.send(f'Experience Scores for {ctx.guild.name}')
+        gameRole = get(ctx.guild.roles, name='Game Access')
+        if gameRole is None:
+            await ctx.send('Hmm you havent set your server up correctly')
+        empty = True
+        for member in ctx.guild.members:
+            if gameRole in member.roles:
+                db_user1 = await get_from_db(member)
+                xpNum = db_user1.xpNum
+                await ctx.send(member.display_name +": "+ str(xpNum))
+                empty = False
+        if empty:
+            await ctx.send('No Players')
+
+    
+
+
 
 
 setup = PlayCore.setup
