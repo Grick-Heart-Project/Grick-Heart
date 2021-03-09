@@ -17,6 +17,7 @@ class Tools(Cog):
         inviteEmbed = discord.Embed(title='Grick Heart Invite Links', color=0x239B56)
         inviteEmbed.add_field(name='Bot Invite', value='https://discord.com/oauth2/authorize?client_id=778756422275956766&scope=bot&permissions=335801458', inline=True)
         inviteEmbed.add_field(name='Support Server Invite', value='https://discord.gg/2uGynhee4K')
+        inviteEmbed.set_footer(text=f'Current Bot Version: v{release}')
         await ctx.send(embed=inviteEmbed)
 
     @commands.command()
@@ -31,6 +32,7 @@ class Tools(Cog):
         creditsEmbed.add_field(name='Developer', value=hydro_mention)
         creditsEmbed.add_field(name='Bot Framework Developer', value=eyes_mention)
         creditsEmbed.add_field(name='Bot Requestor', value=walker_mention)
+        creditsEmbed.add_field(name='API', value='https://open5e.com')
         creditsEmbed.set_footer(text=f'Current Bot Version: v{release}')
         await ctx.send(embed=creditsEmbed)
 

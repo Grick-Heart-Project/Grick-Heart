@@ -89,13 +89,13 @@ class Searches(Cog):
             spellName1 = '-'.join(spellname.split(' '))
             try:
                 sD = spellAPI(spellName1)
+                embed = spellembed(sD['name'], sD['page'], sD['level'], sD['school'], sD['casting_time'], sD['range'], sD['components'], sD['duration'], sD['dnd_class'])
+                await ctx.send(embed=embed)
+                spellText = sD['desc'] +" At Higher Levels: "+ sD['higher_level']
+                await ctx.send(f"Spell Text: {spellText}")
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find spell {spellname}')
                 return
-            embed = spellembed(sD['name'], sD['page'], sD['level'], sD['school'], sD['casting_time'], sD['range'], sD['components'], sD['duration'], sD['dnd_class'])
-            await ctx.send(embed=embed)
-            spellText = sD['desc'] +" At Higher Levels: "+ sD['higher_level']
-            await ctx.send(f"Spell Text: {spellText}")
 
         '''
         @commands.command()
@@ -103,23 +103,32 @@ class Searches(Cog):
             monstername1 = '-'.join(monstername.split(' '))
             try:
                 mD = monsterAPI(monstername1)
+                embed = monsterembed(mD['name'], mD['size'], mD['type'], mD['armor_class'], mD['hit_points'], mD['strength'], mD['dexterity'], mD['constitution'], mD['intelligence'], mD['wisdom'], mD['charisma'], mD['damage_resistances'], mD['damage_immunities'], mD['condition_immunities'], mD['senses'], mD['languages'], mD['actions'], mD['reactions'], mD['legendary_actions'])
+                await ctx.send(embed=embed)
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find monster {monstername}')
                 return
-            embed = monsterembed(mD['name'], mD['size'], mD['type'], mD['armor_class'], mD['hit_points'], mD['strength'], mD['dexterity'], mD['constitution'], mD['intelligence'], mD['wisdom'], mD['charisma'], mD['damage_resistances'], mD['damage_immunities'], mD['condition_immunities'], mD['senses'], mD['languages'], mD['actions'], mD['reactions'], mD['legendary_actions'])
-            await ctx.send(embed=embed)
         '''     
 
         @commands.command()
         async def weapon(self, ctx: MyContext, *, weaponname):
             weaponname1 = '-'.join(weaponname.split(' '))
+            if (weaponname1 == 'Molotov Cocktail' or 'molotov cocktail'):
+                if (ctx.author.id == '712401279774621827'):
+                    await ctx.send(f"{ctx.author.mention}, you lack the skill to use that")
+                    return
+                else:
+                    hydro: discord.User = await self.bot.fetch_user(711960088553717781)
+                    hydro_mention: str = hydro.mention
+                    await ctx.send(f"Be careful with that, you wouldn't want to hurt {hydro_mention}")
+                    return
             try:
                 wD = weaponAPI(weaponname1)
+                embed = weaponembed(wD['name'], wD['category'], wD['document__slug'], wD['cost'], wD['damage_dice'], wD['damage_type'], wD['weight'])
+                await ctx.send(embed=embed)
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find weapon {weaponname}')
                 return
-            embed = weaponembed(wD['name'], wD['category'], wD['document__slug'], wD['cost'], wD['damage_dice'], wD['damage_type'], wD['weight'])
-            await ctx.send(embed=embed)
 
 
 setup = Searches.setup
