@@ -113,7 +113,7 @@ class Searches(Cog):
         @commands.command()
         async def weapon(self, ctx: MyContext, *, weaponname):
             weaponname1 = '-'.join(weaponname.split(' '))
-            if (weaponname1 == 'Molotov Cocktail' or 'molotov cocktail'):
+            if (weaponname == 'Molotov Cocktail' or weaponname == 'molotov cocktail'):
                 if (ctx.author.id == '712401279774621827'):
                     await ctx.send(f"{ctx.author.mention}, you lack the skill to use that")
                     return
@@ -122,13 +122,14 @@ class Searches(Cog):
                     hydro_mention: str = hydro.mention
                     await ctx.send(f"Be careful with that, you wouldn't want to hurt {hydro_mention}")
                     return
-            try:
-                wD = weaponAPI(weaponname1)
-                embed = weaponembed(wD['name'], wD['category'], wD['document__slug'], wD['cost'], wD['damage_dice'], wD['damage_type'], wD['weight'])
-                await ctx.send(embed=embed)
-            except KeyError:
-                await ctx.send(f':octagonal_sign: ERROR: Could not find weapon {weaponname}')
-                return
+            else:
+                try:
+                    wD = weaponAPI(weaponname1)
+                    embed = weaponembed(wD['name'], wD['category'], wD['document__slug'], wD['cost'], wD['damage_dice'], wD['damage_type'], wD['weight'])
+                    await ctx.send(embed=embed)
+                except KeyError:
+                    await ctx.send(f':octagonal_sign: ERROR: Could not find weapon {weaponname}')
+                    return
 
 
 setup = Searches.setup
