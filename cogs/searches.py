@@ -19,6 +19,11 @@ def monsterAPI(monstername):
     data = json.loads(request.text)
     return data
 
+def weaponAPI(weaponname):
+    request = requests.get(f'https://api.open5e.com/weapons/{weaponname}')
+    data = json.loads(request.text)
+    return data
+
 def spellembed(name, source, level, school, time, range, components, duration, classes):
     embed = discord.Embed(title=f'Spell Data for {name}', color=0x239B56)
     embed.add_field(name='Source', value=source, inline='true')
@@ -69,6 +74,15 @@ def monsterembed(name, size, type, armor_class, hit_points, strength, dexterity,
     #return vars
 '''
 
+def weaponembed(name, category, source, cost, damage_dice, damage_type, weight):
+    damage = damage_dice +" "+damage_type
+    embed = discord.Embed(title=f'Weapon Data for {name}', color=0x239B56)
+    embed.add_field(name='Source', value=source, inline=True)
+    embed.add_field(name='Cost', value=cost, inline=True)
+    embed.add_field(name='Damage', value=damage, inline=True)
+    embed.add_field(name='Weight', value=weight, inline=True)
+    return embed
+
 class Searches(Cog):
         @commands.command()
         async def spell(self, ctx: MyContext, *, spellname):
@@ -83,7 +97,7 @@ class Searches(Cog):
             spellText = sD['desc'] +" At Higher Levels: "+ sD['higher_level']
             await ctx.send(f"Spell Text: {spellText}")
 
-'''
+        '''
         @commands.command()
         async def monster(self, ctx: MyContext, *, monstername):
             monstername1 = '-'.join(monstername.split(' '))
@@ -94,7 +108,18 @@ class Searches(Cog):
                 return
             embed = monsterembed(mD['name'], mD['size'], mD['type'], mD['armor_class'], mD['hit_points'], mD['strength'], mD['dexterity'], mD['constitution'], mD['intelligence'], mD['wisdom'], mD['charisma'], mD['damage_resistances'], mD['damage_immunities'], mD['condition_immunities'], mD['senses'], mD['languages'], mD['actions'], mD['reactions'], mD['legendary_actions'])
             await ctx.send(embed=embed)
-'''
+        '''     
+
+        @commands.command()
+        async def weapon(self, ctx: MyContext, *, weaponname):
+            weaponname1 = '-'.join(weaponname.split(' '))
+            try:
+                wD = weaponAPI(weaponname1)
+            except KeyError:
+                await ctx.send(f':octagonal_sign: ERROR: Could not find weapon {weaponname}')
+                return
+            embed = weaponembed(wD['name'], wD['category'], wD['document__slug'], wD['cost'], wD['damage_dice'], wD['damage_type'], wD['weight'])
+            await ctx.send(embed=embed)
 
 
 setup = Searches.setup
