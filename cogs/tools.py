@@ -29,7 +29,7 @@ class Tools(Cog):
         walker_mention: str = walker.mention
         creditsEmbed = discord.Embed(title='Grick Heart Credits', color=0x239B56)
         creditsEmbed.add_field(name='Developer', value=hydro_mention)
-        creditsEmbed.add_field(name='Bot Framwork Developer', value=eyes_mention)
+        creditsEmbed.add_field(name='Bot Framework Developer', value=eyes_mention)
         creditsEmbed.add_field(name='Bot Requestor', value=walker_mention)
         creditsEmbed.set_footer(text=f'Current Bot Version: v{release}')
         await ctx.send(embed=creditsEmbed)
