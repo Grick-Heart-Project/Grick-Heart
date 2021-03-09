@@ -36,15 +36,21 @@ class PlayCore(Cog):
         await ctx.send(f"{ctx.author.mention}, you rolled a {value}!")
     
     @commands.command()
-    async def spell(self, ctx: MyContext, spellname):
+    async def spell(self, ctx: MyContext, *, spellname):
+        spellName1 = ''.join(spellname.split(' '))
         try:
-            sD = spelljson(spellname)
+            sD = spelljson(spellName1)
         except KeyError:
             await ctx.send(f':octagonal_sign: ERROR: Could not find spell {spellname}')
             return
         embed = spellembed(sD['name'], sD['source'], sD['level'], sD['school'], sD['time'], sD['range'], sD['components'], sD['duration'], sD['classes'])
         await ctx.send(embed=embed)
-        await ctx.send(f"Spell Text {sD['text']}")
+        text = str(sD['text'])
+        spellText1 = ''.join(text.split('"', 2))
+        spellText2 = ''.join(spellText1.split('[', 1))
+        spellText3 = ''.join(spellText2.split("'", 2))
+        spellText = ''.join(spellText3.split(']', 1))
+        await ctx.send(f"Spell Text: {spellText}")
 
     @commands.has_any_role('DM', 'DM Helper')
     @commands.command()

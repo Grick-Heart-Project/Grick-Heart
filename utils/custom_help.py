@@ -28,7 +28,7 @@ class EmbedHelpCommand(commands.HelpCommand):
         embed = discord.Embed(title='Grick Heart Commands', colour=0x239B56)
         embed.set_footer(text=f'Current Bot Version: v{release}')
         embed.add_field(name='Roll Command', value='You can roll any dice on the planet with `!roll <dice type> <modifiers>` (replace <dice type> with the kind of dice you want to role i.e. `!roll d20`', inline=False)
-        embed.add_field(name='Spell Command', value='You can look up any spell in the D&D universe with `!spell <spell name>`. Currently, please use no spaces in the spellname (will be changed in the future).', inline=False)
+        embed.add_field(name='Spell Command', value='You can look up any spell in the D&D universe with `!spell <spell name>`.', inline=False)
         embed.add_field(name='Game Command', value='This command allows DMs to control who is in the game. You can add players with `!game add <player>` and remove them with `!game remove <player>`. Be sure that you have set up your roles and channels correctly!', inline=False)
         embed.add_field(name='Initiative Command', value="By far the most handy command in the bot, you can roll for initiative with `!init roll <modifiers>` and then see your initiative number with `!init whatsmy`. You can also see all member's number with `!init list`. DMs can reset the initiative with `!init reset`.", inline=False)
         await self.get_destination().send(embed=embed)
