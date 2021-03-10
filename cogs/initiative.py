@@ -32,11 +32,11 @@ class Initiative(Cog):
     
     @initiative.command()
     async def list(self, ctx: MyContext):
-        await ctx.send(f'Initiative List for {ctx.guild.name}')
         gameRole = get(ctx.guild.roles, name='Game Access')
         if gameRole is None:
             await ctx.send('Hmm you havent set your server up correctly')
         empty = True
+        embed = discord.Embed(title=f'Initiative List for {ctx.guild.name}', color=0x239B56)
         for member in ctx.guild.members:
             if gameRole in member.roles:
                 db_user1 = await get_from_db(member)
@@ -44,10 +44,11 @@ class Initiative(Cog):
                     initNum = 'Not yet rolled for initiative'
                 else:
                     initNum = db_user1.initNum
-                await ctx.send(member.display_name +": "+ str(initNum))
+                embed.add_field(name=member, value=str(initNum), inline=False)
                 empty = False
         if empty:
             await ctx.send('No Players')
+        await ctx.send(embed=embed)
 
     @commands.has_any_role('DM', 'DM Helper')
     @initiative.command()

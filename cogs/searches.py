@@ -28,8 +28,13 @@ def magicitemsAPI(itemname):
     data = json.loads(request.text)
     return data
 
-def spellembed(name, source, level, school, time, range, components, duration, classes):
-    embed = discord.Embed(title=f'Spell Data for {name}', color=0x239B56)
+def conditionAPI(conditionname):
+    request = requests.get(f'https://api.open5e.com/conditions/{conditionname}')
+    data = json.loads(request.text)
+    return data
+
+def spellembed(name, source, level, school, time, range, components, duration, classes, text):
+    embed = discord.Embed(title=f'Spell Data for {name}',description=text, color=0x239B56)
     embed.add_field(name='Source', value=source, inline='true')
     embed.add_field(name='Level', value=level, inline='true')
     embed.add_field(name='School', value=school, inline='true')
@@ -38,7 +43,6 @@ def spellembed(name, source, level, school, time, range, components, duration, c
     embed.add_field(name='Components', value=components, inline='true')
     embed.add_field(name='Duration', value=duration, inline='true')
     embed.add_field(name='Classes', value=classes, inline='true')
-    embed.add_field(name='Spell Text', value='Look in message below', inline='true')
     return embed
 
     '''
@@ -64,17 +68,22 @@ def weaponembed(name, category, source, cost, damage_dice, damage_type, weight):
     embed.add_field(name='Weight', value=weight, inline=True)
     return embed
 
-def magicitemembed(name, type, rarity, requires_attunement, source):
+def magicitemembed(name, type, rarity, requires_attunement, source, text):
     if (requires_attunement == 'requires attunement'):
         requires_attunement = 'true'
     else:
         requires_attunement = 'false'
-    embed = discord.Embed(title=f'Magic Item Data for {name}', color=0x239B56)
+    embed = discord.Embed(title=f'Magic Item Data for {name}',description=text, color=0x239B56)
     embed.add_field(name='Source', value=source, inline=True)
     embed.add_field(name='Type', value=type, inline=True)
     embed.add_field(name='Rarity', value=rarity, inline=True)
     embed.add_field(name='Requires Attunement?', value=requires_attunement, inline=True)
     embed.add_field(name='Description', value='Look in message below', inline=False)
+    return embed
+
+def conditionembed(name, desc, source):
+    embed = discord.Embed(title=f'Condition: {name}', description=desc, color=0x239B56)
+    embed.add_field(name='Source', value=source)
     return embed
 
 
@@ -84,12 +93,16 @@ class Searches(Cog):
             spellName1 = '-'.join(spellname.split(' '))
             try:
                 sD = spellAPI(spellName1)
-                embed = spellembed(sD['name'], sD['page'], sD['level'], sD['school'], sD['casting_time'], sD['range'], sD['components'], sD['duration'], sD['dnd_class'])
-                await ctx.send(embed=embed)
                 if (sD['higher_level'] == ""):
                     higher_level = 'No Bonuses'
+                else:
+                    higher_level = sD['higher_level']
                 spellText = sD['desc'] +" At Higher Levels: "+ higher_level
-                await ctx.send(f"Spell Text: {spellText}")
+                if (len(spellText) > 2048):
+                    await ctx.send(spellText)
+                    spellText = 'Description too large, look in message above'
+                embed = spellembed(sD['name'], sD['page'], sD['level'], sD['school'], sD['casting_time'], sD['range'], sD['components'], sD['duration'], sD['dnd_class'], spellText)
+                await ctx.send(embed=embed)
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find spell {spellname}')
                 return
@@ -130,12 +143,24 @@ class Searches(Cog):
             itemname1 = '-'.join(itemname.split(' '))
             try:
                 iD = magicitemsAPI(itemname1)
-                embed = magicitemembed(iD['name'], iD['type'], iD['rarity'], iD['requires_attunement'], iD['document__slug'])
+                desc = iD['desc']
+                if (len(desc) > 2048):
+                    desc = 'Description too large, look for message above'
+                    await ctx.send(iD['desc'])
+                embed = magicitemembed(iD['name'], iD['type'], iD['rarity'], iD['requires_attunement'], iD['document__slug'], desc)
                 await ctx.send(embed=embed)
-                itemText = iD['desc']
-                await ctx.send(f'Item Description: {itemText}')
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find magic item {itemname}')
+                return
+
+        @commands.command()
+        async def condition(self, ctx: MyContext, *, conditionname):
+            try:
+                cD = conditionAPI(conditionname)
+                embed = conditionembed(cD['name'], cD['desc'], cD['document__slug'])
+                await ctx.send(embed=embed)
+            except KeyError:
+                await ctx.send(f':octagonal_sign: ERROR: Could not find condition {conditionname}')
                 return
 
 
