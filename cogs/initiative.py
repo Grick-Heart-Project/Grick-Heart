@@ -36,7 +36,7 @@ class Initiative(Cog):
         if gameRole is None:
             await ctx.send('Hmm you havent set your server up correctly')
         empty = True
-        embed = discord.Embed(title=f'Initiative List for {ctx.guild.name}', color=0x239B56)
+        embed = discord.Embed(title=f'Initiative List for {ctx.guild.name}', color=0xF1C40F)
         for member in ctx.guild.members:
             if gameRole in member.roles:
                 db_user1 = await get_from_db(member)

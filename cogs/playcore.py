@@ -82,7 +82,7 @@ class PlayCore(Cog):
     @commands.has_any_role('Game Access', 'DM', 'DM Helper')
     @experience.command()
     async def list(self, ctx: MyContext):
-        embed = discord.Embed(title=f'Experience Scores for {ctx.guild.name}', color=0x239B56)
+        embed = discord.Embed(title=f'Experience Scores for {ctx.guild.name}', color=0xF1C40F)
         gameRole = get(ctx.guild.roles, name='Game Access')
         if gameRole is None:
             await ctx.send('Hmm you havent set your server up correctly')

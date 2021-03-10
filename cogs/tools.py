@@ -14,7 +14,7 @@ with open('release.json') as f:
 class Tools(Cog):
     @commands.command()
     async def invite(self, ctx: MyContext):
-        inviteEmbed = discord.Embed(title='Grick Heart Invite Links', color=0x239B56)
+        inviteEmbed = discord.Embed(title='Grick Heart Invite Links', color=0xF1C40F)
         inviteEmbed.add_field(name='Bot Invite', value='https://discord.com/oauth2/authorize?client_id=778756422275956766&scope=bot&permissions=335801458', inline=True)
         inviteEmbed.add_field(name='Support Server Invite', value='https://discord.gg/2uGynhee4K')
         inviteEmbed.set_footer(text=f'Current Bot Version: v{release}')
@@ -28,7 +28,7 @@ class Tools(Cog):
         hydro_mention: str = hydro.mention
         eyes_mention: str = eyes.mention
         walker_mention: str = walker.mention
-        creditsEmbed = discord.Embed(title='Grick Heart Credits', color=0x239B56)
+        creditsEmbed = discord.Embed(title='Grick Heart Credits', color=0xF1C40F)
         creditsEmbed.add_field(name='Developer', value=hydro_mention)
         creditsEmbed.add_field(name='Bot Framework Developer', value=eyes_mention)
         creditsEmbed.add_field(name='Bot Requestor', value=walker_mention)

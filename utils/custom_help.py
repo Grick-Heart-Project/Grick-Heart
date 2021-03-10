@@ -24,7 +24,7 @@ class EmbedHelpCommand(commands.HelpCommand):
         return '{0.qualified_name} {0.signature}'.format(command)
 
     async def send_bot_help(self, mapping):
-        embed = discord.Embed(title='Grick Heart Commands', colour=0x239B56)
+        embed = discord.Embed(title='Grick Heart Commands', colour=0xF1C40F)
         embed.set_footer(text=f'Current Bot Version: v{release}')
         embed.add_field(name='Roll Command', value='You can roll any dice on the planet with `!roll <dice type> <modifiers>` (replace <dice type> with the kind of dice you want to role i.e. `!roll d20`)', inline=False)
         embed.add_field(name='Spell Command', value='You can look up any spell in the D&D universe with `!spell <spell name>`.', inline=False)

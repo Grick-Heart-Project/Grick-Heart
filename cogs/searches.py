@@ -34,7 +34,7 @@ def conditionAPI(conditionname):
     return data
 
 def spellembed(name, source, level, school, time, range, components, duration, classes, text):
-    embed = discord.Embed(title=f'Spell Data for {name}',description=text, color=0x239B56)
+    embed = discord.Embed(title=f'Spell Data for {name}',description=text, color=0xF1C40F)
     embed.add_field(name='Source', value=source, inline='true')
     embed.add_field(name='Level', value=level, inline='true')
     embed.add_field(name='School', value=school, inline='true')
@@ -55,13 +55,13 @@ def spellembed(name, source, level, school, time, range, components, duration, c
             condition_immunities = "None"
         if (legendary_actions == ''):
             legendary_actions = "None"
-        embed = discord.Embed(title=f'Monster Data for {name}', color=0x239B56)
+        embed = discord.Embed(title=f'Monster Data for {name}', color=0xF1C40F)
     '''
 
 
 def weaponembed(name, category, source, cost, damage_dice, damage_type, weight):
     damage = damage_dice +" "+damage_type
-    embed = discord.Embed(title=f'Weapon Data for {name}', color=0x239B56)
+    embed = discord.Embed(title=f'Weapon Data for {name}', color=0xF1C40F)
     embed.add_field(name='Source', value=source, inline=True)
     embed.add_field(name='Cost', value=cost, inline=True)
     embed.add_field(name='Damage', value=damage, inline=True)
@@ -73,7 +73,7 @@ def magicitemembed(name, type, rarity, requires_attunement, source, text):
         requires_attunement = 'true'
     else:
         requires_attunement = 'false'
-    embed = discord.Embed(title=f'Magic Item Data for {name}',description=text, color=0x239B56)
+    embed = discord.Embed(title=f'Magic Item Data for {name}',description=text, color=0xF1C40F)
     embed.add_field(name='Source', value=source, inline=True)
     embed.add_field(name='Type', value=type, inline=True)
     embed.add_field(name='Rarity', value=rarity, inline=True)
@@ -82,7 +82,7 @@ def magicitemembed(name, type, rarity, requires_attunement, source, text):
     return embed
 
 def conditionembed(name, desc, source):
-    embed = discord.Embed(title=f'Condition: {name}', description=desc, color=0x239B56)
+    embed = discord.Embed(title=f'Condition: {name}', description=desc, color=0xF1C40F)
     embed.add_field(name='Source', value=source)
     return embed
 
