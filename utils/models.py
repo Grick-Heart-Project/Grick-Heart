@@ -1,5 +1,7 @@
 import discord
 import typing
+from discord.enums import DefaultAvatar
+from discord.mentions import default
 from tortoise import Tortoise, fields
 from tortoise.models import Model
 
@@ -16,6 +18,10 @@ class DiscordGuild(Model):
     discord_id = fields.BigIntField(index=True)
     name = fields.TextField()
     prefix = fields.CharField(20, null=True)
+    gameChannel = fields.TextField(default='none')
+    gameRole = fields.TextField(default='none')
+    isInit = fields.IntField(default=0)
+
 
     language = fields.CharField(6, default="en")
 
