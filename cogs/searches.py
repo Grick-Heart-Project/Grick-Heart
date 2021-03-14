@@ -45,27 +45,14 @@ def spellembed(name, source, level, school, time, range, components, duration, c
     embed.add_field(name='Classes', value=classes, inline='true')
     return embed
 
-    '''
-    def monsterembed(name, size, type, armor_class, hit_points, strength, dexterity, constitution, intelligence, wisdom, charisma, damage_vulnerabilities, damage_immunities, condition_immunities, senses, languages, actions, reactions, legendary_actions):
-        if (damage_vulnerabilities == ''):
-            damage_vulnerabilities = "None"
-        if (damage_immunities == ''):
-            damage_immunities = "None"
-        if (condition_immunities == ''):
-            condition_immunities = "None"
-        if (legendary_actions == ''):
-            legendary_actions = "None"
-        embed = discord.Embed(title=f'Monster Data for {name}', color=0xF1C40F)
-    '''
-
-
 def weaponembed(name, category, source, cost, damage_dice, damage_type, weight):
     damage = damage_dice +" "+damage_type
     embed = discord.Embed(title=f'Weapon Data for {name}', color=0xF1C40F)
     embed.add_field(name='Source', value=source, inline=True)
     embed.add_field(name='Cost', value=cost, inline=True)
-    embed.add_field(name='Damage', value=damage, inline=True)
     embed.add_field(name='Weight', value=weight, inline=True)
+    embed.add_field(name='Damage', value=damage, inline=True)
+    embed.add_field(name='Category', value=category, inline=True)
     return embed
 
 def magicitemembed(name, type, rarity, requires_attunement, source, text):
@@ -106,16 +93,6 @@ class Searches(Cog):
             except KeyError:
                 await ctx.send(f':octagonal_sign: ERROR: Could not find spell {spellname}')
                 return
-        '''
-        @commands.command()
-        async def monster(self, ctx: MyContext, monstername):
-            monstername1 = '-'.join(monstername.split(' '))
-            try:
-                mD = monsterAPI(monstername1)
-
-            except KeyError:
-                await ctx.send(f':octagonal_sign: ERROR: Could not find monster {monstername}')
-        '''
 
         @commands.command()
         async def weapon(self, ctx: MyContext, *, weaponname):
@@ -123,12 +100,10 @@ class Searches(Cog):
             if (weaponname == 'Molotov Cocktail' or weaponname == 'molotov cocktail'):
                 if (ctx.author.id == '712401279774621827'):
                     await ctx.send(f"{ctx.author.mention}, you lack the skill to use that")
-                    return
                 else:
                     hydro: discord.User = await self.bot.fetch_user(711960088553717781)
                     hydro_mention: str = hydro.mention
                     await ctx.send(f"Be careful with that, you wouldn't want to hurt {hydro_mention}")
-                    return
             else:
                 try:
                     wD = weaponAPI(weaponname1)
