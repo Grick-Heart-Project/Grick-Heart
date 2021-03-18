@@ -2,6 +2,7 @@ import asyncio
 import collections
 import datetime
 from typing import Optional
+from copy import deepcopy
 
 import aiohttp
 import discord
@@ -81,14 +82,12 @@ class MyBot(AutoShardedBot):
 
 
 async def get_prefix(bot: MyBot, message: discord.Message):
-    forced_prefixes = bot.config["bot"]["prefixes"]
+    forced_prefixes = deepcopy(bot.config["bot"]["prefixes"])
 
     if not message.guild:
         # Need no prefix when in DMs
         return commands.when_mentioned_or(*forced_prefixes, "")(bot, message)
-
     else:
-
         if bot.config["database"]["enable"]:
             db_guild = await get_from_db(message.guild)
             guild_prefix = db_guild.prefix

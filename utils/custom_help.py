@@ -1,11 +1,24 @@
+from utils.bot_class import get_prefix
 from discord.ext import commands
 import discord
 import json
+
+from utils.config import load_config
+from utils.models import get_from_db
+
+config = load_config()
 
 with open('release.json') as f:
     data = json.load(f)
     release = data['ghVersion']
 
+async def getprefix(message: discord.Message):
+    prefix = config["bot"]["prefixes"]
+    db_guild = await get_from_db(message.guild)
+    guild_prefix = db_guild.prefix
+    if guild_prefix:
+        prefix = guild_prefix
+    return prefix
 
 class EmbedHelpCommand(commands.HelpCommand):
     """This is an example of a HelpCommand that utilizes embeds.
@@ -24,15 +37,16 @@ class EmbedHelpCommand(commands.HelpCommand):
         return '{0.qualified_name} {0.signature}'.format(command)
 
     async def send_bot_help(self, mapping):
+        prefix = await getprefix
         embed = discord.Embed(title='Grick Heart Commands', colour=0xF1C40F)
         embed.set_footer(text=f'Current Bot Version: v{release}')
-        embed.add_field(name='Roll Command', value='You can roll any dice on the planet with `!roll <dice type> <modifiers>` (replace <dice type> with the kind of dice you want to role i.e. `!roll d20`)', inline=False)
-        embed.add_field(name='Spell Command', value='You can look up any spell in the D&D universe with `!spell <spell name>`.', inline=False)
-        embed.add_field(name='Weapon Command', value='You can look up any weapon in the D&D universe with `!weapon <weapon name>`.', inline=False)
-        embed.add_field(name='Magic Item Command', value='You can look up any magic item in the D&D universe with `!mitem <item name>`.', inline=False)
-        embed.add_field(name='Condition Command', value='You can look up any condition in the D&D universe with `!condition <condition name>`.')
-        embed.add_field(name='Game Command', value='This command allows DMs to control who is in the game. You can add players with `!game add <player>` and remove them with `!game remove <player>`. Be sure that you have set up your roles and channels correctly!', inline=False)
-        embed.add_field(name='Initiative Command', value="By far the most handy command in the bot, you can roll for initiative with `!init roll <modifiers>` and then see your initiative number with `!init whatsmy`. You can also see all member's number with `!init list`. DMs can reset the initiative with `!init reset`.", inline=False)
-        embed.add_field(name='Experience Command', value="This command stores experience scores in out database. You can see how much experience you have with `!xp whatsmy`, and your friends with `!xp list`. DM's can control xp with `!xp <add, remove, reset> <amount>`.")
-        embed.add_field(name='Initialize Command (Admin Only)', value="This command allows administrators to setup their servers", inline=False)
+        embed.add_field(name='Roll Command', value=f'You can roll any dice on the planet with `{prefix}roll <dice type> <modifiers>` (replace <dice type> with the kind of dice you want to role i.e. `!roll d20`)', inline=False)
+        embed.add_field(name='Spell Command', value=f'You can look up any spell in the D&D universe with `!spell <spell name>`.', inline=False)
+        embed.add_field(name='Weapon Command', value=f'You can look up any weapon in the D&D universe with `!weapon <weapon name>`.', inline=False)
+        embed.add_field(name='Magic Item Command', value=f'You can look up any magic item in the D&D universe with `!mitem <item name>`.', inline=False)
+        embed.add_field(name='Condition Command', value=f'You can look up any condition in the D&D universe with `!condition <condition name>`.')
+        embed.add_field(name='Game Command', value=f'This command allows DMs to control who is in the game. You can add players with `!game add <player>` and remove them with `!game remove <player>`. Be sure that you have set up your roles and channels correctly!', inline=False)
+        embed.add_field(name='Initiative Command', value=f"By far the most handy command in the bot, you can roll for initiative with `!init roll <modifiers>` and then see your initiative number with `!init whatsmy`. You can also see all member's number with `!init list`. DMs can reset the initiative with `!init reset`.", inline=False)
+        embed.add_field(name='Experience Command', value=f"This command stores experience scores in out database. You can see how much experience you have with `!xp whatsmy`, and your friends with `!xp list`. DM's can control xp with `!xp <add, remove, reset> <amount>`.")
+        embed.add_field(name='Initialize Command (Admin Only)', value=f"This command allows administrators to setup their servers", inline=False)
         await self.get_destination().send(embed=embed)
