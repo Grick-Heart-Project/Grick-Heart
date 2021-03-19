@@ -18,7 +18,7 @@ class MyBot(AutoShardedBot):
         self.logger = FakeLogger()
         self.config: dict = {}
         self.reload_config()
-        activity = discord.Activity(type=discord.ActivityType.watching, name=self.config["bot"]["playing"])
+        activity = discord.Activity(type=discord.ActivityType.playing, name=self.config["bot"]["playing"])
         super().__init__(*args, command_prefix=get_prefix, activity=activity, case_insensitive=self.config["bot"]["commands_are_case_insensitive"], **kwargs)
         self.commands_used = collections.Counter()
         self.uptime = datetime.datetime.utcnow()
