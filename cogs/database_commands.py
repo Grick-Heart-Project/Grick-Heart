@@ -13,19 +13,6 @@ from utils.models import get_from_db
 
 
 class DatabaseCommands(Cog):
-    @commands.command()
-    async def how_many(self, ctx: MyContext):
-        """
-        Say hi with a customisable hello message. This is used to demonstrate cogs config usage
-        """
-        _ = await ctx.get_translate_function()
-        db_user = await get_from_db(ctx.author, as_user=True)
-        db_user.times_ran_example_command += 1
-        await db_user.save()
-        await ctx.send(_("You ran that command {times_ran_example_command} times already!",
-                         times_ran_example_command=db_user.times_ran_example_command
-                         ))
-
     @commands.group()
     async def settings(self, ctx: MyContext):
         """

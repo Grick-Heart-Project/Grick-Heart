@@ -13,11 +13,17 @@ class Initiative(Cog):
     @commands.has_role('Game Access')
     @commands.group(aliases=['init'])
     async def initiative(self, ctx: MyContext):
+        """
+        Initiative Handler
+        """
         if not ctx.invoked_subcommand:
             await ctx.send("Grick Heart's Initiative command!\nSyntax: `!init <option>`")
 
     @initiative.command()
     async def roll(self, ctx: MyContext, modifiers = 0):
+        """
+        Rolls for initiative and adds modifiers
+        """
         rawValue = random.randint(1, int(20))
         value = rawValue + modifiers
         await ctx.send(f"{ctx.author.mention}, you rolled a {value} for initiative!")
@@ -27,11 +33,17 @@ class Initiative(Cog):
     
     @initiative.command()
     async def whatsmy(self, ctx: MyContext):
+        """
+        Returns your current initiative score
+        """
         db_user = await get_from_db(ctx.author)
         await ctx.send(f'{ctx.author.mention}, your initiative number is {db_user.initNum}')
     
     @initiative.command()
     async def list(self, ctx: MyContext):
+        """
+        Returns your guilds initiative list
+        """
         gameRole = get(ctx.guild.roles, name='Game Access')
         if gameRole is None:
             await ctx.send('Hmm you havent set your server up correctly')
@@ -53,6 +65,9 @@ class Initiative(Cog):
     @commands.has_any_role('DM', 'DM Helper')
     @initiative.command()
     async def reset(self, ctx: MyContext):
+        """
+        Resets all initiative scores
+        """
         gameRole = get(ctx.guild.roles, name='Game Access')
         if gameRole is None:
             await ctx.send('Hmm you havent set your server up correctly')
@@ -66,15 +81,5 @@ class Initiative(Cog):
                 empty = False
         if empty:
             await ctx.send('No Players')
-
-    @commands.is_owner()
-    @initiative.command()
-    async def test(self, ctx: MyContext):
-        print(ctx.guild.members)
-            
-
-
-
-
 
 setup = Initiative.setup

@@ -12,6 +12,9 @@ class BotSetup(Cog):
     @commands.has_guild_permissions(administrator=True)
     @commands.group()
     async def initialize(self, ctx: MyContext):
+        """
+        Set up the guild for playing D&D
+        """
         db_guild = await get_from_db(ctx.guild)
         if not ctx.invoked_subcommand:
             if (db_guild.isInit > 1):
@@ -25,6 +28,9 @@ class BotSetup(Cog):
     
     @initialize.command()
     async def role(self, ctx: MyContext, *, role):
+        """
+        Set the game role
+        """
         db_guild = await get_from_db(ctx.guild)
         if (db_guild.isInit > 1):
                 await ctx.send(f"It looks like you have already set your guild up!")
@@ -37,6 +43,9 @@ class BotSetup(Cog):
 
     @initialize.command()
     async def channel(self, ctx: MyContext, *, channel):
+        """
+        Set the game channel
+        """
         db_guild = await get_from_db(ctx.guild)
         if (db_guild.isInit > 1):
                 await ctx.send(f"It looks like you have already set your guild up!")
@@ -49,6 +58,9 @@ class BotSetup(Cog):
 
     @initialize.command()
     async def reset(self, ctx: MyContext):
+        """
+        Resets the guild
+        """
         db_guild = await get_from_db(ctx.guild)
         if (db_guild.isInit < 2):
                 await ctx.send(f"It looks like you haven't set your guild up!")

@@ -1,6 +1,7 @@
 import discord
 import json
 import sys
+import time
 
 from utils.ctx_class import MyContext
 from utils.cog_class import Cog
@@ -15,6 +16,9 @@ with open('release.json') as f:
 class Tools(Cog):
     @commands.command()
     async def version(self, ctx: MyContext):
+        """
+        Returns bot system info/version
+        """
         verEmbed = discord.Embed(title="Grick Heart Version Info", description='', color=0x239B56)
         verEmbed.add_field(name='Version', value=data['ghVersion'], inline='true')
         verEmbed.add_field(name='Release Date', value=data['releaseDate'], inline='true')
@@ -24,6 +28,9 @@ class Tools(Cog):
 
     @commands.command()
     async def invite(self, ctx: MyContext):
+        """
+        Grabs bot invite link/support server link
+        """
         inviteEmbed = discord.Embed(title='Grick Heart Invite Links', color=0xF1C40F)
         inviteEmbed.add_field(name='Bot Invite', value='https://discord.com/oauth2/authorize?client_id=778756422275956766&scope=bot&permissions=335801458', inline=True)
         inviteEmbed.add_field(name='Support Server Invite', value='https://discord.gg/2uGynhee4K')
@@ -32,6 +39,9 @@ class Tools(Cog):
 
     @commands.command()
     async def credits(self, ctx: MyContext):
+        """
+        Returns bot credits
+        """
         hydro: discord.User = await self.bot.fetch_user(711960088553717781)
         eyes: discord.User =  await self.bot.fetch_user(138751484517941259)
         walker: discord.User = await self.bot.fetch_user(712401279774621827)
@@ -47,8 +57,18 @@ class Tools(Cog):
         creditsEmbed.set_footer(text=f'Current Bot Version: v{release}')
         await ctx.send(embed=creditsEmbed)
 
-    #@commands.command()
-    #async def convert(self, ctx: MyContext, currency1, currency2, amount):
+    @commands.command()
+    async def ping(self, ctx: MyContext):
+        """
+        Check that the bot is online, give the latency between the bot and discord servers.
+        """
+        _ = await ctx.get_translate_function()
+
+        t_1 = time.perf_counter()
+        await ctx.trigger_typing()  # tell Discord that the bot is "typing", which is a very simple request
+        t_2 = time.perf_counter()
+        time_delta = round((t_2 - t_1) * 1000)  # calculate the time needed to trigger typing
+        await ctx.send(_("Pong. — Time taken: {miliseconds}ms", miliseconds=time_delta))  # send a message telling the user the calculated ping time
 
 
 setup = Tools.setup

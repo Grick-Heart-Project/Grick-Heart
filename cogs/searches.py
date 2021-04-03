@@ -77,6 +77,9 @@ def conditionembed(name, desc, source):
 class Searches(Cog):
         @commands.command()
         async def spell(self, ctx: MyContext, *, spellname):
+            """
+            Searches the magical archives (API) for any spell
+            """
             spellName1 = '-'.join(spellname.split(' '))
             try:
                 sD = spellAPI(spellName1)
@@ -96,6 +99,9 @@ class Searches(Cog):
 
         @commands.command()
         async def weapon(self, ctx: MyContext, *, weaponname):
+            """
+            Searches the smithy's records (API) for any weapon 
+            """
             weaponname1 = '-'.join(weaponname.split(' '))
             if (weaponname == 'Molotov Cocktail' or weaponname == 'molotov cocktail'):
                 if (ctx.author.id == '712401279774621827'):
@@ -115,6 +121,9 @@ class Searches(Cog):
         
         @commands.command(aliases=['mitem'])
         async def magicitem(self, ctx: MyContext, *, itemname):
+            """
+            Searches Wave Echo Cave's log (API) for any magic item crafted there
+            """
             itemname1 = '-'.join(itemname.split(' '))
             try:
                 iD = magicitemsAPI(itemname1)
@@ -130,6 +139,9 @@ class Searches(Cog):
 
         @commands.command()
         async def condition(self, ctx: MyContext, *, conditionname):
+            """
+            Searched some doctor book (API) for any condition
+            """
             try:
                 cD = conditionAPI(conditionname)
                 embed = conditionembed(cD['name'], cD['desc'], cD['document__slug'])

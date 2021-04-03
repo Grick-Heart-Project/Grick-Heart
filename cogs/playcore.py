@@ -1,4 +1,5 @@
 from operator import add
+from os import name
 import time
 import discord
 import random
@@ -15,6 +16,9 @@ from utils.models import get_from_db
 class PlayCore(Cog):
     @commands.command()
     async def roll(self, ctx: MyContext, dice, modifiers = 0):
+        """
+        Rolls literally ANY dice you want
+        """
         diceNum = ''.join(dice.split('d', 1))
         value = random.randint(1, int(diceNum)) + modifiers
         await ctx.send(f"{ctx.author.mention}, you rolled a {value}!")
@@ -22,6 +26,9 @@ class PlayCore(Cog):
     @commands.has_any_role('DM', 'DM Helper')
     @commands.command()
     async def game(self, ctx: MyContext, option, member: discord.Member):
+        """
+        Game Handler. This command controls who is in the game and who isn't
+        """
         db_guild = await get_from_db(ctx.guild)
         if (db_guild.isInit < 2):
             await ctx.send(f'This guild is not initialized! Go bother your admins to run `!initialize`!')
@@ -42,12 +49,18 @@ class PlayCore(Cog):
 
     @commands.group(aliases=['xp'])
     async def experience(self, ctx: MyContext):
+        """
+        Experience Point Handler
+        """
         if not ctx.invoked_subcommand:
             await ctx.send("Grick Heart's Experience command!\nSyntax: `!xp <option>`")
 
     @commands.has_role('DM')
     @experience.command(aliases=['give'])
     async def add(self, ctx: MyContext, player: discord.Member, addAmount):
+        """
+        Adds Experience Points
+        """
         addXP = int(addAmount)
         db_user = await get_from_db(player)
         oldXPNum = db_user.xpNum
@@ -58,6 +71,9 @@ class PlayCore(Cog):
     @commands.has_role('DM')
     @experience.command(aliases=['revoke', 'take'])
     async def remove(self, ctx: MyContext, player: discord.Member, removeAmount):
+        """
+        Removes Experience Points
+        """
         subtractXP = int(removeAmount)
         db_user = await get_from_db(player)
         oldXPNum = db_user.xpNum
@@ -68,6 +84,9 @@ class PlayCore(Cog):
     @commands.has_role('DM')
     @experience.command()
     async def reset(self, ctx: MyContext, player: discord.Member):
+        """
+        Resets Experience Points
+        """
         db_user = await get_from_db(player)
         db_user.xpNum = 0
         await db_user.save()
@@ -76,12 +95,18 @@ class PlayCore(Cog):
     @commands.has_role('Game Access')
     @experience.command()
     async def whatsmy(self, ctx: MyContext):
+        """
+        Returns the amount of experience the author has
+        """
         db_user = await get_from_db(ctx.author)
         await ctx.send(f"{ctx.author.mention}, your experience score is {db_user.xpNum}.")
 
     @commands.has_any_role('Game Access', 'DM', 'DM Helper')
     @experience.command()
     async def list(self, ctx: MyContext):
+        """
+        Lists the experience total for all those at the table
+        """
         embed = discord.Embed(title=f'Experience Scores for {ctx.guild.name}', color=0xF1C40F)
         gameRole = get(ctx.guild.roles, name='Game Access')
         if gameRole is None:
