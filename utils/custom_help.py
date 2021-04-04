@@ -25,7 +25,7 @@ class EmbedHelpCommand(commands.HelpCommand):
 
     bot = commands.Bot(help_command=EmbedHelpCommand())
     """
-    COLOUR = 0x239B56
+    COLOUR = 0xF1C40F
 
     def get_ending_note(self):
         return 'Use {0}{1} [command] for more info on a command.'.format(self.clean_prefix, self.invoked_with)
