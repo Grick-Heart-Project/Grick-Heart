@@ -19,7 +19,7 @@ class Tools(Cog):
         """
         Returns bot system info/version
         """
-        verEmbed = discord.Embed(title="Grick Heart Version Info", description='', color=0x239B56)
+        verEmbed = discord.Embed(title="Grick Heart Version Info", description='', color=0xF1C40F)
         verEmbed.add_field(name='Version', value=data['ghVersion'], inline='true')
         verEmbed.add_field(name='Release Date', value=data['releaseDate'], inline='true')
         verEmbed.add_field(name='Have Issues?', value='Let us know at our GitHub page!\n https://github.com/Grick-Heart-Project/Grick-Heart', inline='false')
