@@ -30,14 +30,14 @@ class VoteCog(Cog):
     async def on_dbl_test(self, data):
         user_id = data['user']
         user = await self.bot.fetch_user(user_id)
-        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again!", color=0xF1C40F)
+        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again! (This is a Test!)", color=0xF1C40F)
         await user.send(embed=thanks_embed)
 
     @commands.Cog.listener()
-    async def on_dbl_test(self, data):
+    async def on_dbl_vote(self, data):
         user_id = data['user']
         user = await self.bot.fetch_user(user_id)
-        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again! (This is a Test!", color=0xF1C40F)
+        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again!", color=0xF1C40F)
         await user.send(embed=thanks_embed)
         task = asyncio.create_task(self.vote_reminder(user))
         self.user_callbacks[user.id] = task
