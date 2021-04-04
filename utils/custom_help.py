@@ -42,6 +42,7 @@ class EmbedHelpCommand(commands.HelpCommand):
             command_signatures = [f"{self.get_command_signature(c)} - {c.short_doc}" for c in filtered]
             if command_signatures:
                 cog_name = getattr(cog, "qualified_name", "No Category")
+                if (cog_name == 'Jishaku'): continue
                 embed.add_field(name=cog_name, value="\n".join(command_signatures), inline=False)
 
         channel = self.get_destination()
