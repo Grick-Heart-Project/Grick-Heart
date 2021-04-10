@@ -21,7 +21,7 @@ class PlayCore(Cog):
         """
         diceNum = ''.join(dice.split('d', 1))
         value = random.randint(1, int(diceNum)) + modifiers
-        await ctx.send(f"{ctx.author.mention}, you rolled a {value}!")
+        await ctx.reply(f" You rolled a {value}!")
 
     @commands.has_any_role('DM', 'DM Helper')
     @commands.command()
