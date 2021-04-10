@@ -78,7 +78,7 @@ class SupportServerCommands(Cog):
     async def before(self):
         await self.bot.wait_until_ready()
 
-    @commands.command(aliases=["shard_status"])
+    @commands.command(aliases=["shard_status"], hidden=True)
     async def shards(self, ctx: MyContext):
         """
         Check the status of every shard the bot is hosting.
