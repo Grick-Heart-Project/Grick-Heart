@@ -21,7 +21,7 @@ class BotSetup(Cog):
                 await ctx.send(f"It looks like you have already set your guild up!")
                 return
             else:
-                embed = discord.Embed(title='Setting up Grick Heart', color=0xF1C40F)
+                embed = discord.Embed(title='Setting up Grick Heart', color=0x239B56)
                 embed.add_field(name='Game Role', value="Please create a game role, and then run `!initialize role <EXACT ROLE NAME>`.", inline=False)
                 embed.add_field(name='Game Table', value="Please create a channel for the game to take place in, and then run `!initialize channel <EXACT CHANNEL NAME>`.", inline=False)
                 await ctx.send(embed=embed)

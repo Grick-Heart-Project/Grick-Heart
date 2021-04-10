@@ -107,7 +107,7 @@ class PlayCore(Cog):
         """
         Lists the experience total for all those at the table
         """
-        embed = discord.Embed(title=f'Experience Scores for {ctx.guild.name}', color=0xF1C40F)
+        embed = discord.Embed(title=f'Experience Scores for {ctx.guild.name}', color=0x239B56)
         gameRole = get(ctx.guild.roles, name='Game Access')
         if gameRole is None:
             await ctx.send('Hmm you havent set your server up correctly')

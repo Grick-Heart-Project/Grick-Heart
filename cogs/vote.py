@@ -30,21 +30,21 @@ class VoteCog(Cog):
     async def on_dbl_test(self, data):
         user_id = data['user']
         user = await self.bot.fetch_user(user_id)
-        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again! (This is a Test!)", color=0xF1C40F)
+        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again! (This is a Test!)", color=0x239B56)
         await user.send(embed=thanks_embed)
 
     @commands.Cog.listener()
     async def on_dbl_vote(self, data):
         user_id = data['user']
         user = await self.bot.fetch_user(user_id)
-        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again!", color=0xF1C40F)
+        thanks_embed = discord.Embed(title='Thanks For Voting!', description=f"Hey {user.mention}!\n\nThanks for voting for {self.bot.user.name}! I will remind you in 12 hours to vote for me again!", color=0x239B56)
         await user.send(embed=thanks_embed)
         task = asyncio.create_task(self.vote_reminder(user))
         self.user_callbacks[user.id] = task
 
     async def vote_reminder(self, user: discord.User):
         await asyncio.sleep(86460)
-        remind_embed = discord.Embed(title='A Friendly Reminder to Vote!', description=f"Hey {user.display_name}! It's been 12 hours since you voted, and this is a reminder to do it again! You can vote at https://top.gg/bot/778756422275956766. Thanks!", color=0xF1C40F)
+        remind_embed = discord.Embed(title='A Friendly Reminder to Vote!', description=f"Hey {user.display_name}! It's been 12 hours since you voted, and this is a reminder to do it again! You can vote at https://top.gg/bot/778756422275956766. Thanks!", color=0x239B56)
         await user.send(embed=remind_embed)
         user_callback = self.user_callbacks.pop(user.id)
         if isinstance(user_callback, asyncio.Task):
