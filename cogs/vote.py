@@ -24,6 +24,9 @@ class VoteCog(Cog):
 
     @commands.command()
     async def vote(self, ctx: MyContext):
+        """
+        Vote for Grick Heart on Top.gg!
+        """
         await ctx.send(f"Hey! Why don't you vote for {self.bot.user.name} on top.gg? You can do that at https://top.gg/bot/778756422275956766")
 
     @commands.Cog.listener()
