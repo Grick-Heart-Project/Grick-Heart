@@ -25,9 +25,12 @@ token = " --discord token-- "
 token = " --top.gg token--"
 password = ' --password-- '
 
+[auth.statcord]
+token = " --statcord token-- "
+
 [cogs]
 # Names of cogs to load. Usually cogs.file_name_without_py
-cogs_to_load = ['jishaku', 'cogs.error_handling', 'cogs.background_loop', 'cogs.support_server_commands', 'cogs.database_commands', 'cogs.playcore', 'cogs.tools', 'cogs.searches', 'cogs.initiative', 'cogs.botsetup', 'cogs.vote']
+cogs_to_load = ['jishaku', 'cogs.error_handling', 'cogs.background_loop', 'cogs.support_server_commands', 'cogs.database_commands', 'cogs.playcore', 'cogs.tools', 'cogs.searches', 'cogs.initiative', 'cogs.botsetup', 'cogs.vote', 'cogs.statcord']
 
 [cogs.SupportServerCommands]
 # That's the ID of your server where the command will be ran
