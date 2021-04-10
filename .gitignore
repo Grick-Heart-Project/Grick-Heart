@@ -1,6 +1,0 @@
-.vscode/
-logs/*
-config.toml
-cogs/__pycache__/
-utils/__pycache__/
-tests/
