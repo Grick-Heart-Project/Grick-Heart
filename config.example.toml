@@ -1,7 +1,7 @@
 [bot]
-prefixes = ["?"]
+prefixes = ["!", "gh!"]
 description = """D&D Bot for Discord"""
-playing = "WOTC Scams (Secret Lair)"
+playing = "hide and seek with orcs"
 commands_are_case_insensitive = true
 
 [database]
@@ -16,19 +16,22 @@ password = " --password-- "
 database = " --db-- "
 
 [auth.discord]
-# Your bot token. You can find it on the Bot page of the Developper portal
-token = " --token-- "
+# Your bot token. You can find it on the Bot page of the Developer portal
+token = " --discord token-- "
+
+
+[auth.top]
+# Webhook token for interacting with the top.gg API
+token = " --top.gg token--"
+password = ' --password-- '
 
 [cogs]
 # Names of cogs to load. Usually cogs.file_name_without_py
-cogs_to_load = ['jishaku', 'cogs.error_handling', 'cogs.simple_commands', 'cogs.background_loop', 'cogs.support_server_commands', 'cogs.database_commands', 'cogs.basic_info', 'cogs.playcore', 'cogs.tools', 'cogs.searches', 'cogs.initiative', 'cogs.botsetup']
-
-# The name after cogs is the name of the class
-[cogs.SimpleCommands]
-hello_message = "Hello there!"
+cogs_to_load = ['jishaku', 'cogs.error_handling', 'cogs.background_loop', 'cogs.support_server_commands', 'cogs.database_commands', 'cogs.playcore', 'cogs.tools', 'cogs.searches', 'cogs.initiative', 'cogs.botsetup', 'cogs.vote']
 
 [cogs.SupportServerCommands]
 # That's the ID of your server where the command will be ran
-support_server_id = 782282959734308914
+support_server_id = 0
 # ID of an empty channel that will be used as a status dashboard.
-status_channel_id = 816826847286526023
+status_channel_id = 0
+
