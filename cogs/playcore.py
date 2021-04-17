@@ -21,7 +21,10 @@ class PlayCore(Cog):
         """
         diceNum = ''.join(dice.split('d', 1))
         value = random.randint(1, int(diceNum)) + modifiers
-        await ctx.reply(f" You rolled a {value}!")
+        try:
+            await ctx.reply(f" You rolled a {value}!")
+        except discord.errors.HTTPException:
+            await ctx.reply('You can\'t roll that large of a dice!')
 
     @commands.has_any_role('DM', 'DM Helper')
     @commands.command()
