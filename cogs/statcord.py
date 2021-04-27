@@ -23,6 +23,9 @@ class StatcordPost(commands.Cog):
 
     @commands.command()
     async def stats(self, ctx: MyContext):
+        """
+        Get Grick Heart's stats!
+        """
         await ctx.send(f'Check out {self.bot.user.name}\'s Statcord page at https://statcord.com/bot/{self.bot.user.id}')
 
 
