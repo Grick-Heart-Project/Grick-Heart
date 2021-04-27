@@ -27,28 +27,43 @@ class PlayCore(Cog):
             await ctx.reply('You can\'t roll that large of a dice!')
 
     @commands.has_any_role('DM', 'DM Helper')
-    @commands.command()
-    async def game(self, ctx: MyContext, option, member: discord.Member):
+    @commands.group()
+    async def game(self, ctx: MyContext):
         """
         Game Handler. This command controls who is in the game and who isn't
         """
-        db_guild = await get_from_db(ctx.guild)
+        if not ctx.invoked_subcommand:
+            await ctx.send_help('game')
+
+    @game.command()
+    async def add(self, member: discord.Member):
+        """
+        Adds a user to the game
+        """
         if (db_guild.isInit < 2):
             await ctx.send(f'This guild is not initialized! Go bother your admins to run `!initialize`!')
             return
-        else:
-            if (option == 'add'):
-                role = get(ctx.guild.roles, name=db_guild.gameRole)
-                gameChannel = get(ctx.guild.channels, name=db_guild.gameChannel)
-                await gameChannel.send(f'{member} has been added to the game!')
-                await member.add_roles(role)
-                await ctx.send(f'{member} has been added to the game!')
-            if (option == 'remove'):
-                role = get(ctx.guild.roles, name=db_guild.gameRole)
-                gameChannel = get(ctx.guild.channels, name=db_guild.gameChannel)
-                await gameChannel.send(f'{member} has been removed from the game!')
-                await member.remove_roles(role)
-                await ctx.send(f'{member} has been removed from the game!')
+        db_guild = await get_from_db(ctx.guild)
+        role = get(ctx.guild.roles, name=db_guild.gameRole)
+        gameChannel = get(ctx.guild.channels, name=db_guild.gameChannel)
+        await gameChannel.send(f'{member} has been added to the game!')
+        await member.add_roles(role)
+        await ctx.send(f'{member} has been added to the game!')
+
+    @game.command()
+    async def remove(self, member: discord.Member):
+        """
+        Removes a user from the game
+        """
+        if (db_guild.isInit < 2):
+            await ctx.send(f'This guild is not initialized! Go bother your admins to run `!initialize`!')
+            return
+        role = get(ctx.guild.roles, name=db_guild.gameRole)
+        gameChannel = get(ctx.guild.channels, name=db_guild.gameChannel)
+        await gameChannel.send(f'{member} has been removed from the game!')
+        await member.remove_roles(role)
+        await ctx.send(f'{member} has been removed from the game!')
+
 
     @commands.group(aliases=['xp'])
     async def experience(self, ctx: MyContext):
@@ -125,7 +140,7 @@ class PlayCore(Cog):
             await ctx.send('No Players')
         await ctx.send(embed=embed)
 
-    
+
 
 
 
